@@ -1,4 +1,4 @@
-package com.mobile.bitstro.bitstroapp;
+package com.mobile.bitstro.bitstroapp.model;
 
 /**
  * Created by natal on 06/11/2016.

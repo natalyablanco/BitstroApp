@@ -1,13 +1,5 @@
-package com.mobile.bitstro.bitstroapp;
+package com.mobile.bitstro.bitstroapp.rest;
 
-import android.util.Base64;
-
-import java.io.IOException;
-
-import okhttp3.Interceptor;
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
@@ -17,21 +9,23 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class ServiceGenerator {
 
-    public static final String API_BASE_URL = "https://api.github.com/";
-    // "https://bitstro.herokuapp.com/";
+    public static final String API_BASE_URL = "https://bitstro.herokuapp.com/";
+    private static Retrofit retrofit = null;
 
-    private static OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
+   // private static OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
 
-    private static Retrofit.Builder builder =
-            new Retrofit.Builder()
+    public static Retrofit getClient(){
+        if(retrofit == null){
+          retrofit = new Retrofit.Builder()
                     .baseUrl(API_BASE_URL)
-                    .addConverterFactory(GsonConverterFactory.create());
-
-    public static <S> S createService(Class<S> serviceClass) {
-        return createService(serviceClass, null, null);
+                    .addConverterFactory(GsonConverterFactory.create())
+                    .build();
+        }
+        return retrofit;
     }
 
-    public static <S> S createService(Class<S> serviceClass, String username, String password) {
+
+   /* public static <S> S createService(Class<S> serviceClass, String username, String password) {
         if (username != null && password != null) {
             String credentials = username + ":" + password;
             final String basic =
@@ -39,7 +33,7 @@ public class ServiceGenerator {
 
             httpClient.addInterceptor(new Interceptor() {
                 @Override
-                public Response intercept(Interceptor.Chain chain) throws IOException {
+                public Response intercept(Chain chain) throws IOException {
                     Request original = chain.request();
 
                     Request.Builder requestBuilder = original.newBuilder()
@@ -80,6 +74,6 @@ public class ServiceGenerator {
         OkHttpClient client = httpClient.build();
         Retrofit retrofit = builder.client(client).build();
         return retrofit.create(serviceClass);
-    }
+    }*/
 
 }
