@@ -1,6 +1,7 @@
 package com.mobile.bitstro.bitstroapp.rest;
 
 import com.mobile.bitstro.bitstroapp.model.AccessToken;
+import com.mobile.bitstro.bitstroapp.model.User;
 
 import retrofit2.Call;
 import retrofit2.http.Field;
@@ -12,6 +13,9 @@ import retrofit2.http.POST;
  */
 
 public interface LoginService {
+
+    @POST("/login")
+    Call<User> basicLogin();
 
     @FormUrlEncoded
     @POST("/users/auth_login/")

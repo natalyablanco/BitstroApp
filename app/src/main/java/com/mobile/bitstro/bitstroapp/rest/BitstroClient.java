@@ -20,4 +20,5 @@ public interface  BitstroClient {
 
     @GET("/users/")
     Call<List<User>> users();
+
 }
