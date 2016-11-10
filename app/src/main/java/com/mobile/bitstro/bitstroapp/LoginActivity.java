@@ -4,19 +4,19 @@ import android.annotation.TargetApi;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.mobile.bitstro.bitstroapp.model.AccessToken;
+import com.mobile.bitstro.bitstroapp.model.User;
 import com.mobile.bitstro.bitstroapp.rest.LoginService;
 import com.mobile.bitstro.bitstroapp.rest.ServiceGenerator;
-
-import java.io.IOException;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 
 /**
@@ -49,54 +49,56 @@ public class LoginActivity extends AppCompatActivity  {
 
     @OnClick(R.id.loginbutton)
     void login(){
-
+        // Create a REST adapter which points the GitHub API endpoint.
         LoginService loginService =
-                ServiceGenerator.createSeryvice(LoginService.class,
+                ServiceGenerator.createService(LoginService.class,
                                                 email.getText().toString(),
                                                 password.getText().toString());
 
+        // Fetch and print the access token
+        Log.i("After creating login service ", " ");
+        Call<User> call = loginService.basicLogin();
 
-       /* String username = "sarahjean";
-        Call<User> call = apiService.getUser(username);
-        call.enqueue(new SortedList.Callback<User>() {
+        call.enqueue(new Callback<User>(){
+
+
             @Override
             public void onResponse(Call<User> call, Response<User> response) {
-                int statusCode = response.code();
-                User user = response.body();
+                Log.i("ON RESPONSE: ", call.request().toString());
+                if (response.isSuccessful()) {
+                    // user object available
+                    Log.i("ACCESS TOKEN: ",response.body().getToken());
+                } else {
+                    // error response, no access to resource?
+                    Log.e("ERROR response:", "");
+                }
             }
 
             @Override
             public void onFailure(Call<User> call, Throwable t) {
-                // Log error here since request failed
+                // something went completely south (like no internet connection)
+                Log.d("Error", t.getMessage());
             }
-        });*/
+        });
+        //Call<AccessToken> call = loginService.getAccessToken("code", "authorization_code");
+       /* call.enqueue(new Callback<AccessToken>() {
+                         @Override
+                         public void onResponse(Call<AccessToken> call, Response<AccessToken> response) {
+                             if (response.isSuccessful()) {
+                                 // tasks available
+                                 Log.i("Success ", response.body().toString());
+                             } else {
+                                 // error response, no access to resource?
+                                 Log.i("Error response ", String.valueOf(response));
+                             }
+                         }
 
-        Call<AccessToken> call = loginService.getAccessToken("code", "authorization_code");
-        try {
-            AccessToken accessToken =  call.execute().body();
-                /*    call.enqueue(new Callback<AccessToken>() {
-                @Override
-                public void onResponse(Call<AccessToken> call, Response<AccessToken> response) {
-                    int statusCode = response.code();
-                    AccessToken user = response.body();
-                }
-
-                @Override
-                public void onFailure(Call<AccessToken> call, Throwable t) {
-                    // Log error here since request failed
-                }
-
-            });*/
-
-            Toast.makeText(this, "Login "+accessToken, Toast.LENGTH_LONG).show();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        /*Intent intent = new Intent(
-                Intent.ACTION_VIEW,
-                Uri.parse(ServiceGenerator.API_BASE_URL + "/users/auth_login/"));
-        startActivity(intent);*/
+                         @Override
+                         public void onFailure(Call<AccessToken> call, Throwable t) {
+                             // something went completely south (like no internet connection)
+                             Log.d("Error", t.getMessage());
+                         }
+                     });*/
     }
 
     @Override

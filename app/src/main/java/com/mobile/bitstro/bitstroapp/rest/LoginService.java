@@ -14,8 +14,10 @@ import retrofit2.http.POST;
 
 public interface LoginService {
 
-    @POST("/login")
-    Call<User> basicLogin();
+    @POST("/users/auth_login/")
+    Call<User> basicLogin(
+
+    );
 
     @FormUrlEncoded
     @POST("/users/auth_login/")

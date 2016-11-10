@@ -1,6 +1,7 @@
 package com.mobile.bitstro.bitstroapp.rest;
 
 import android.util.Base64;
+import android.util.Log;
 
 import com.mobile.bitstro.bitstroapp.model.AccessToken;
 
@@ -30,14 +31,15 @@ public class ServiceGenerator {
                     .addConverterFactory(GsonConverterFactory.create());
 
     public static <S> S createService(Class<S> serviceClass) {
-        return createService(serviceClass, null);
+        Retrofit retrofit = builder.client(httpClient.build()).build();
+        return retrofit.create(serviceClass);
     }
 
-    public static <S> S createSeryvice(Class<S> serviceClass, String username, String password) {
+    public static <S> S createService(Class<S> serviceClass, String username, String password) {
         if (username != null && password != null) {
-            String credentials = username + ":" + password;
+            final String credentials = username + ":" + password;
             final String basic =
-                    "Token " + Base64.encodeToString(credentials.getBytes(), Base64.NO_WRAP);
+                    "Basic " + Base64.encodeToString(credentials.getBytes(), Base64.NO_WRAP);
 
             httpClient.addInterceptor(new Interceptor() {
                 @Override
@@ -50,6 +52,7 @@ public class ServiceGenerator {
                             .method(original.method(), original.body());
 
                     Request request = requestBuilder.build();
+                    Log.i("CREATE SERVICE ", request.toString());
                     return chain.proceed(request);
                 }
             });
