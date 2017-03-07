@@ -1,11 +1,23 @@
 package com.mobile.bitstro.bitstroapp.authentication;
 
 import android.annotation.TargetApi;
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.facebook.AccessToken;
+import com.facebook.CallbackManager;
+import com.facebook.FacebookCallback;
+import com.facebook.FacebookException;
+import com.facebook.login.LoginResult;
+import com.facebook.login.widget.LoginButton;
+import com.google.firebase.auth.FirebaseAuth;
 import com.mobile.bitstro.bitstroapp.BitstroApplication;
 import com.mobile.bitstro.bitstroapp.R;
 import com.mobile.bitstro.bitstroapp.di.modules.AuthenticationModule;
@@ -30,6 +42,17 @@ public class AuthenticationActivity extends AppCompatActivity implements Authent
     TextView password;
 
 
+    private FirebaseAuth firebaAuth;
+
+
+
+    private FirebaseAuth.AuthStateListener firebaseAuthListener;
+
+
+    private CallbackManager mCallbackManager;
+    private LoginButton loginButton;
+
+
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
@@ -40,6 +63,12 @@ public class AuthenticationActivity extends AppCompatActivity implements Authent
                 .plus(new AuthenticationModule(this))
                 .inject(this);
 
+        LoginButton loginButton = (LoginButton) findViewById(R.id.login_button);
+
+
+        }
+
+    private void handleFacebookAccessToken(AccessToken accessToken) {
 
     }
 
@@ -57,6 +86,15 @@ public class AuthenticationActivity extends AppCompatActivity implements Authent
     @Override
     public void showSigninButton() {
 
+    }
+
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        // Pass the activity result back to the Facebook SDK
+        mCallbackManager.onActivityResult(requestCode, resultCode, data);
     }
 }
 

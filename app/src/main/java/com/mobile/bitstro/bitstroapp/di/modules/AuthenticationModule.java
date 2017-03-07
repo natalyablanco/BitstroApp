@@ -18,6 +18,7 @@ import dagger.Provides;
 public class AuthenticationModule {
 
     private static FragmentActivity fragmentActivity;
+    private static GoogleApiClient googleApi;
 
     public AuthenticationModule(FragmentActivity activity) {
         this.fragmentActivity = activity;
@@ -30,8 +31,7 @@ public class AuthenticationModule {
 
     @Provides
     public static GoogleApiClient providesGoogleApiClient() {
-        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions
-        .DEFAULT_SIGN_IN)
+        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestIdToken(fragmentActivity.getString(R.string.default_web_client_id))
                 .requestEmail()
                 .build();

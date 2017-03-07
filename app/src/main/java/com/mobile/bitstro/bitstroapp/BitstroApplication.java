@@ -21,8 +21,9 @@ public class BitstroApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-        FirebaseApp.initializeApp(getBaseContext());
-        applicationComponent = DaggerApplicationComponent.builder().applicationModule(
-                new ApplicationModule(this)).build();
+      //  FirebaseApp.initializeApp(getBaseContext());
+        applicationComponent = DaggerApplicationComponent.builder()
+                .applicationModule(new ApplicationModule(this))
+                .build();
     }
 }
