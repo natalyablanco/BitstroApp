@@ -1,6 +1,7 @@
-package com.mobile.bitstro.bitstroapp.model;
-
+package com.mobile.bitstro.bitstroapp.models;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import javax.annotation.Generated;
 
@@ -11,12 +12,11 @@ import javax.annotation.Generated;
 
 
 @Generated("org.jsonschema2pojo")
-public class Dish {
+public class Menu {
 
     private String title;
-    private Integer menu;
     private String description;
-    private String image;
+    private List<Dish> dishes = new ArrayList<Dish>();
     private Map<String, Object> additionalProperties = new HashMap<String, Object>();
 
     /**
@@ -40,24 +40,6 @@ public class Dish {
     /**
      *
      * @return
-     * The menu
-     */
-    public Integer getMenu() {
-        return menu;
-    }
-
-    /**
-     *
-     * @param menu
-     * The menu
-     */
-    public void setMenu(Integer menu) {
-        this.menu = menu;
-    }
-
-    /**
-     *
-     * @return
      * The description
      */
     public String getDescription() {
@@ -76,19 +58,19 @@ public class Dish {
     /**
      *
      * @return
-     * The image
+     * The dishes
      */
-    public String getImage() {
-        return image;
+    public List<Dish> getDishes() {
+        return dishes;
     }
 
     /**
      *
-     * @param image
-     * The image
+     * @param dishes
+     * The dishes
      */
-    public void setImage(String image) {
-        this.image = image;
+    public void setDishes(List<Dish> dishes) {
+        this.dishes = dishes;
     }
 
     public Map<String, Object> getAdditionalProperties() {

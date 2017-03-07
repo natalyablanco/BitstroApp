@@ -1,4 +1,4 @@
-package com.mobile.bitstro.bitstroapp.model;
+package com.mobile.bitstro.bitstroapp.models;
 import java.util.HashMap;
 import java.util.Map;
 import javax.annotation.Generated;
